@@ -61,14 +61,14 @@
   <div id="loader" class="fixed inset-0 z-[100] flex items-center justify-center bg-forest transition-opacity duration-500">
     <div class="text-center">
       <div class="w-12 h-12 border-4 border-mint border-t-sage rounded-full animate-spin mx-auto mb-4"></div>
-      <p class="text-mint text-xs tracking-widest uppercase">Preparing Campus</p>
+      <p class="text-mint text-xs tracking-widest uppercase">Loading...</p>
     </div>
   </div>
 
   <nav class="fixed top-0 inset-x-0 z-50 bg-forest/95 backdrop-blur-md border-b border-white/5">
     <div class="max-w-6xl mx-auto px-5">
       <div class="flex items-center justify-between h-16">
-        <a href="#home" class="font-display text-lg text-mint">🌿 Jomar Mata</a>
+        <a href="#home" class="font-display text-lg text-mint">Vote Jomar Mata</a>
         
         <div class="hidden md:flex gap-8">
           <a href="#home" class="text-sm font-medium text-mint/80 hover:text-white transition">Home</a>
@@ -98,9 +98,9 @@
       <div class="w-full md:w-1/2 text-center md:text-left reveal">
         <span class="inline-block px-3 py-1 rounded-full bg-sage/10 text-emerald text-xs font-bold uppercase tracking-wider mb-4">YES-O Candidate 2026</span>
         <h1 class="text-5xl md:text-7xl mb-4 leading-tight">Jomar <span class="text-emerald">Mata</span></h1>
-        <p class="text-lg font-semibold text-emerald/90 mb-4">Candidate for YES-O President</p>
+        <p class="text-lg font-semibold text-emerald/90 mb-4">for YES-O President</p>
         <p class="text-base text-forest/70 mb-8 max-w-md mx-auto md:mx-0">
-          Driving environmental discipline and student service through accountability and sustainable action.
+          School Year 2026-2027  |  Aim High PHS
         </p>
         <div class="flex flex-wrap justify-center md:justify-start gap-4">
           <a href="#platforms" class="px-8 py-4 bg-emerald text-cream rounded-full font-bold text-sm shadow-lg shadow-emerald/20 flex items-center gap-2">
@@ -129,10 +129,14 @@
         </div>
         <div class="w-full md:w-2/3 reveal">
           <p class="text-base leading-relaxed mb-6 opacity-90 text-justify">
-            Jomar Cabral Mata is a consistent honor student and dedicated student leader from Pacac High School. 
-            Currently serving in various leadership capacities, he combines his skills as a campus journalist with a 
-            strong passion for environmental advocacy. He is committed to fostering a culture of discipline and 
-            active student participation in school programs.
+            Jomar Cabral Mata is from Brgy. Narvacan 1, Guimba, Nueva Ecija. He is a consistent honor student from daycare up to present, maintaining steady academic performance across all grade levels.
+
+He is a student leader involved in different school activities and responsibilities. He also works as a campus journalist, contributing written outputs for school publications and covering school-related events through writing.
+
+He takes part in school programs focused on environment, student participation, and campus activities. He handles academic requirements with discipline and follows structured study habits. He joins group tasks and school activities with focus on completion and accuracy.
+
+His experience in journalism supports his ability to write, observe details, and report information clearly. His involvement in school activities builds consistency in communication, organization, and responsibility in academic settings.
+
           </p>
           <div class="grid grid-cols-3 gap-3">
             <div class="bg-white/5 p-3 rounded-lg text-center border border-white/10">
@@ -156,7 +160,7 @@
   <section id="platforms" class="py-20 px-5 bg-cream">
     <div class="max-w-3xl mx-auto">
       <div class="text-center mb-12 reveal">
-        <h2 class="text-3xl md:text-4xl mb-4">Mission & Vision</h2>
+        <h2 class="text-3xl md:text-4xl mb-4">PLATFORMS</h2>
         <p class="text-sm text-emerald font-medium">Click each platform to see full details</p>
       </div>
       
@@ -173,28 +177,43 @@
   <script>
     // Data
     const platforms = [
-      {
-        title: 'Daily Cleanliness Monitoring',
-        icon: 'sparkles',
-        problem: 'Inconsistent campus cleanliness.',
-        action: 'Daily monitoring by YES-O officers per section.',
-        result: 'Higher accountability and a pristine school environment.'
-      },
-      {
-        title: 'Makulay ang Buhay Program',
-        icon: 'leaf',
-        problem: 'Underutilized green spaces.',
-        action: 'Sustainable school gardening and planting activities.',
-        result: 'Greener surroundings and hands-on environmental learning.'
-      },
-      {
-        title: 'Waste Segregation Policy',
-        icon: 'recycle',
-        problem: 'Mixed waste disposal issues.',
-        action: 'Strict implementation and monitoring of trash bins.',
-        result: 'Zero-waste discipline across all grade levels.'
-      }
-    ];
+{
+title: 'Enhancement of Daily Cleanliness Monitoring',
+problem: 'Inconsistent campus cleanliness and weak supervision of daily cleaning routines.',
+action: 'Assign YES-O officers and members for daily monitoring, enforce structured cleaning schedules, increase student participation per section.',
+result: 'Cleaner campus environment, improved discipline, stronger accountability among students.',
+icon: 'sparkles'
+},
+{
+title: 'Makulay ang Buhay Kapag may Gulay Program',
+problem: 'Limited student engagement in sustainable gardening and green space development.',
+action: 'Develop and maintain YES-O garden, organize planting activities, involve students in regular care and harvesting.',
+result: 'Greener school environment, active student participation, stronger sustainability awareness.',
+icon: 'leaf'
+},
+{
+title: 'Strengthened Waste Segregation Policy',
+problem: 'Improper waste disposal and lack of discipline in segregation practices.',
+action: 'Implement strict waste segregation rules, assign monitoring teams, require clean-up participation for violations.',
+result: 'Improved waste discipline, reduced mixed waste, stronger environmental responsibility.',
+icon: 'recycle'
+},
+{
+title: 'Huwarang Silid-Aralan Award',
+problem: 'Low motivation in maintaining classroom cleanliness and order.',
+action: 'Monthly evaluation of classrooms based on cleanliness, orderliness, and discipline.',
+result: 'Healthy competition among sections, cleaner classrooms, improved student discipline.',
+icon: 'award'
+},
+{
+title: 'Kalikotpedia Information Drive',
+problem: 'Limited environmental awareness among students.',
+action: 'Weekly posting of environmental content through social media and school channels.',
+result: 'Higher awareness, stronger environmental knowledge, increased student engagement.',
+icon: 'globe'
+}
+];
+
 
     // Render Platforms
     const platformContainer = document.getElementById('platformList');
