@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jomar Mata</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        forest: '#1a3a2a',
+        emerald: '#2d6a4f',
+        sage: '#52b788',
+        mint: '#b7e4c7',
+        cream: '#f0faf4'
+      }
+    }
+  }
+}
+</script>
+  <style>
+html { scroll-behavior: smooth; height: 100%; }
+body { height: 100%; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+h1,h2,h3,.font-display { font-family: 'DM Serif Display', serif; }
+
+/* Loader */
+.loader-screen { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.6s, visibility 0.6s; }
+.loader-screen.hidden { opacity: 0; visibility: hidden; }
+.leaf-spin { width: 48px; height: 48px; animation: spin 1.2s ease-in-out infinite; }
+@keyframes spin { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.1); } 100% { transform: rotate(360deg) scale(1); } }
+
+/* Scroll animations */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-left.active { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal-right.active { opacity: 1; transform: translateX(0); }
+
+/* Counter */
+.counter { font-variant-numeric: tabular-nums; }
+
+/* Card hover */
+.card-hover { transition: transform 0.3s, box-shadow 0.3s; }
+.card-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(26,58,42,0.15); }
+
+/* Image placeholder */
+.image-placeholder { transition: transform 0.4s, box-shadow 0.4s; box-shadow: 0 8px 24px rgba(26,58,42,0.12); }
+.image-placeholder:hover { transform: scale(1.02); box-shadow: 0 12px 36px rgba(82,183,136,0.2); }
+
+/* Nav active */
+.nav-link { position: relative; transition: color 0.3s; }
+.nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; transition: width 0.3s; }
+.nav-link.active::after { width: 100%; }
+
+/* Hamburger */
+.ham-line { transition: transform 0.3s, opacity 0.3s; }
+.ham-open .ham-line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.ham-open .ham-line:nth-child(2) { opacity: 0; }
+.ham-open .ham-line:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Platform expand */
+.platform-expand { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.platform-expand.open { max-height: 600px; }
+
+/* Progress bar animation */
+.progress-fill { transition: width 1.2s ease; }
+
+/* Back to top */
+.back-top { opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; pointer-events: none; }
+.back-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+/* Timeline */
+.timeline-dot { width: 16px; height: 16px; border-radius: 50%; position: relative; z-index: 2; transition: transform 0.3s; }
+.timeline-dot:hover { transform: scale(1.3); }
+
+/* Mobile menu */
+.mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.mobile-menu.open { max-height: 400px; }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto" style="background:#f0faf4;">
+  <!-- Loader -->
+  <div class="loader-screen" id="loader" style="background:#1a3a2a;">
+   <div class="text-center">
+    <svg class="leaf-spin mx-auto mb-4" viewbox="0 0 48 48" fill="none">
+     <path d="M24 4C24 4 8 14 8 28c0 8.8 7.2 16 16 16s16-7.2 16-16C40 14 24 4 24 4z" fill="#52b788" /> <path d="M24 14v22M18 24c3-3 6-4 10-5" stroke="#1a3a2a" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <p class="text-mint text-sm tracking-widest uppercase">Loading</p>
+   </div>
+  </div><!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background:rgba(26,58,42,0.95);backdrop-filter:blur(10px);">
+   <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+     <a href="#home" class="font-display text-xl" style="color:#b7e4c7;">🌿 Jomar Mata</a>
+     <div class="hidden md:flex items-center gap-8">
+      <a href="#home" class="nav-link text-sm font-medium active" style="color:#b7e4c7;" data-nav>Home</a> <a href="#about" class="nav-link text-sm font-medium" style="color:#b7e4c7;" data-nav>About Me</a> <a href="#credentials" class="nav-link text-sm font-medium" style="color:#b7e4c7;" data-nav>Credentials</a> <a href="#platforms" class="nav-link text-sm font-medium" style="color:#b7e4c7;" data-nav>Platforms</a>
+     </div><button id="hamBtn" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu"> <span class="ham-line block w-6 h-0.5" style="background:#b7e4c7;"></span> <span class="ham-line block w-6 h-0.5" style="background:#b7e4c7;"></span> <span class="ham-line block w-6 h-0.5" style="background:#b7e4c7;"></span> </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu md:hidden">
+     <div class="pb-4 flex flex-col gap-3">
+      <a href="#home" class="text-sm font-medium py-2" style="color:#b7e4c7;" data-nav>Home</a> <a href="#about" class="text-sm font-medium py-2" style="color:#b7e4c7;" data-nav>About Me</a> <a href="#credentials" class="text-sm font-medium py-2" style="color:#b7e4c7;" data-nav>Credentials</a> <a href="#platforms" class="text-sm font-medium py-2" style="color:#b7e4c7;" data-nav>Platforms</a>
+     </div>
+    </div>
+   </div>
+  </nav><!-- Hero -->
+  <section id="home" class="pt-24 pb-16 px-4 sm:px-6">
+   <div class="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16">
+    <div class="reveal-left flex-1 text-center md:text-left">
+     <p class="text-sm font-semibold tracking-widest uppercase mb-3" style="color:#52b788;">YES-O Candidate</p>
+     <h1 id="candidateName" class="font-display text-4xl sm:text-5xl lg:text-6xl mb-4 leading-tight" style="color:#1a3a2a;">Jomar<br>
+      Mata</h1>
+     <p id="candidatePosition" class="text-lg font-semibold mb-2" style="color:#2d6a4f;">YES-O President Candidate</p>
+     <p id="candidateTagline" class="text-base mb-6 max-w-md mx-auto md:mx-0" style="color:#2d6a4f;opacity:0.8;">Driving environmental discipline and student service through accountability, sustainability, and collective action.</p><a href="#platforms" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg" style="background:#2d6a4f;color:#f0faf4;"> <i data-lucide="compass" style="width:18px;height:18px;"></i> View My Platforms </a>
+    </div>
+    <div class="reveal-right flex-shrink-0 w-full md:w-auto">
+     <img src="Completers.png" alt="Jomar Mata Profile" class="w-64 h-80 sm:w-72 sm:h-96 object-cover rounded-2xl border-2" style="border-color:#52b788;box-shadow:0 8px 24px rgba(26,58,42,0.2);transition:0.4s;transform:scale(1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'" />
+     </div>
+    </div>
+   </div>
+  </section><!-- About -->
+  <section id="about" class="py-20 px-4 sm:px-6" style="background:#1a3a2a;">
+   <div class="max-w-6xl mx-auto">
+    <h2 id="aboutHeading" class="font-display text-3xl sm:text-4xl text-center mb-12 reveal" style="color:#b7e4c7;">About Me</h2>
+    <div class="flex flex-col md:flex-row gap-10 items-start">
+     <div class="reveal-left flex-1">
+      <p id="aboutText" class="text-base leading-relaxed mb-6" style="color:#b7e4c7;opacity:0.9;">Jomar Cabral Mata is from Brgy. Narvacan 1, Guimba, Nueva Ecija. He is a consistent honor student from daycare up to present, maintaining steady academic performance across all grade levels.
+
+He is a student leader involved in different school activities and responsibilities. He also works as a campus journalist, contributing written outputs for school publications and covering school-related events through writing.
+
+He takes part in school programs focused on environment, student participation, and campus activities. He handles academic requirements with discipline and follows structured study habits. He joins group tasks and school activities with focus on completion and accuracy.
+
+His experience in journalism supports his ability to write, observe details, and report information clearly. His involvement in school activities builds consistency in communication, organization, and responsibility in academic settings.
+</p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+       <div class="p-4 rounded-xl text-center" style="background:rgba(82,183,136,0.15);">
+        <i data-lucide="leaf" class="mx-auto mb-2" style="color:#52b788;width:28px;height:28px;"></i>
+        <p class="text-sm font-semibold" style="color:#b7e4c7;">Environment</p>
+       </div>
+       <div class="p-4 rounded-xl text-center" style="background:rgba(82,183,136,0.15);">
+        <i data-lucide="shield" class="mx-auto mb-2" style="color:#52b788;width:28px;height:28px;"></i>
+        <p class="text-sm font-semibold" style="color:#b7e4c7;">Discipline</p>
+       </div>
+       <div class="p-4 rounded-xl text-center" style="background:rgba(82,183,136,0.15);">
+        <i data-lucide="hand" class="mx-auto mb-2" style="color:#52b788;width:28px;height:28px;"></i>
+        <p class="text-sm font-semibold" style="color:#b7e4c7;">Service</p>
+       </div>
+      </div>
+     </div>
+           <img src="Jomar-barong.png" alt="Jomar Mata Profile" class="w-64 h-80 sm:w-72 sm:h-96 object-cover rounded-2xl border-2" style="border-color:#52b788;box-shadow:0 8px 24px rgba(26,58,42,0.2);transition:0.4s;transform:scale(1);" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Credentials -->
+  <section id="credentials" class="py-20 px-4 sm:px-6" style="background:#f0faf4;">
+   <div class="max-w-4xl mx-auto">
+    <h2 id="credentialsTitle" class="font-display text-3xl sm:text-4xl text-center mb-14 reveal" style="color:#1a3a2a;">Leadership Journey</h2>
+    <div class="relative">
+     <!-- Timeline line -->
+     <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5" style="background:#b7e4c7;transform:translateX(-50%);"></div>
+     <div class="space-y-10" id="timelineItems">
+      <!-- Items injected by JS -->
+     </div>
+    </div>
+   </div>
+  </section><!-- Platforms -->
+  <section id="platforms" class="py-20 px-4 sm:px-6" style="background:#1a3a2a;">
+   <div class="max-w-5xl mx-auto">
+    <h2 class="font-display text-3xl sm:text-4xl text-center mb-4 reveal" style="color:#b7e4c7;">My Campaign Platforms</h2>
+    <p class="text-center text-sm mb-12 reveal" style="color:#52b788;">Click a card to expand and learn more</p>
+    <div class="grid md:grid-cols-2 gap-6" id="platformCards">
+     <!-- Injected by JS -->
+    </div>
+   </div>
+  </section><!-- Back to top --> <button id="backTop" class="back-top fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-40 transition-all hover:scale-110" style="background:#2d6a4f;color:#f0faf4;"> <i data-lucide="arrow-up" style="width:20px;height:20px;"></i> </button><!-- Footer -->
+  <footer class="py-6 px-4 text-center text-xs" style="background:#1a3a2a;color:#52b788;">
+   <p>© 2026 Jomar Mata · Vote for YES-O President · Together for Change</p>
+  </footer>
+  <script>
+// ---- DATA ----
+const credentials = [
+{ year: 'Grade 1', title: 'Class President', icon: 'crown' },
+{ year: 'Grade 2', title: 'Class President', icon: 'crown' },
+{ year: 'Grade 3', title: 'Class President', icon: 'crown' },
+{ year: 'Grade 4', title: 'Class President', icon: 'crown' },
+{ year: 'Grade 6', title: 'Class President', icon: 'crown' },
+
+{ year: 'Elementary', title: 'NIES SSG President', icon: 'award' },
+{ year: 'District', title: 'GWD SSG P.I.O', icon: 'megaphone' },
+
+{ year: 'TLE', title: 'TLE Club Officer', icon: 'wrench' },
+
+{ year: 'Grade 8', title: 'Class Secretary', icon: 'file-text' },
+{ year: 'Grade 8', title: 'YES-O Chairperson', icon: 'leaf' },
+
+{ year: 'Club', title: 'BERT Club Officer', icon: 'users' },
+
+{ year: 'Grade 9', title: 'Class President', icon: 'crown' },
+{ year: 'Grade 9', title: 'YES-O Auditor', icon: 'shield' },
+
+{ year: 'ESP', title: 'ESP Club Officer', icon: 'heart' },
+{ year: 'SSLG', title: 'SSLG Secretary', icon: 'book' },
+
+{ year: 'Filipino', title: 'Filipino Club President', icon: 'flag' },
+{ year: 'Science', title: 'Science Club Officer', icon: 'flask' },
+{ year: 'MAPEH', title: 'MAPEH Club Officer', icon: 'music' },
+
+{ year: 'YES-O', title: 'Member', icon: 'leaf' }
+];
+
+const platforms = [
+{
+title: 'Enhancement of Daily Cleanliness Monitoring',
+problem: 'Inconsistent campus cleanliness and weak supervision of daily cleaning routines.',
+action: 'Assign YES-O officers and members for daily monitoring, enforce structured cleaning schedules, increase student participation per section.',
+result: 'Cleaner campus environment, improved discipline, stronger accountability among students.',
+icon: 'sparkles',
+progress: 0
+},
+{
+title: 'Makulay ang Buhay Kapag may Gulay Program',
+problem: 'Limited student engagement in sustainable gardening and green space development.',
+action: 'Develop and maintain YES-O garden, organize planting activities, involve students in regular care and harvesting.',
+result: 'Greener school environment, active student participation, stronger sustainability awareness.',
+icon: 'leaf',
+progress: 0
+},
+{
+title: 'Strengthened Waste Segregation Policy',
+problem: 'Improper waste disposal and lack of discipline in segregation practices.',
+action: 'Implement strict waste segregation rules, assign monitoring teams, require clean-up participation for violations.',
+result: 'Improved waste discipline, reduced mixed waste, stronger environmental responsibility.',
+icon: 'recycle',
+progress: 0
+},
+{
+title: 'Huwarang Silid-Aralan Award',
+problem: 'Low motivation in maintaining classroom cleanliness and order.',
+action: 'Monthly evaluation of classrooms based on cleanliness, orderliness, and discipline.',
+result: 'Healthy competition among sections, cleaner classrooms, improved student discipline.',
+icon: 'award',
+progress: 0
+},
+{
+title: 'Kalikotpedia Information Drive',
+problem: 'Limited environmental awareness among students.',
+action: 'Weekly posting of environmental content through social media and school channels.',
+result: 'Higher awareness, stronger environmental knowledge, increased student engagement.',
+icon: 'globe',
+progress: 0
+}
+];
+
+
+// ---- DEFAULT CONFIG ----
+const defaultConfig = {
+  candidate_name: 'Jomar\nMata',
+  candidate_position: 'YES-O President Candidate',
+  candidate_tagline: 'Driving environmental discipline and student service through accountability, sustainability, and collective action.',
+  about_heading: 'About Me',
+  about_text: "I'm deeply committed to environmental stewardship and student leadership. As YES-O President, I will champion accountability, discipline, and sustainable practices within our organization. My vision combines environmental responsibility with service-oriented leadership, creating meaningful change through data-driven initiatives and inclusive decision-making. I believe in transparency, empowering fellow students, and building a culture where environmental consciousness becomes second nature.",
+  credentials_title: 'Leadership Journey',
+  background_color: '#f0faf4',
+  surface_color: '#1a3a2a',
+  text_color: '#b7e4c7',
+  primary_action_color: '#2d6a4f',
+  secondary_action_color: '#52b788',
+  font_family: 'DM Serif Display',
+  font_size: 16
+};
+
+// ---- RENDER FUNCTIONS ----
+function renderTimeline() {
+  const el = document.getElementById('timelineItems');
+  el.innerHTML = credentials.map((c, i) => `
+    <div class="relative flex items-start gap-4 md:gap-0 reveal" style="animation-delay:${i*0.1}s;">
+      <div class="hidden md:block w-1/2 ${i%2===0?'pr-10 text-right':'pl-10 order-2'}">
+        <div class="card-hover inline-block p-5 rounded-xl" style="background:white;box-shadow:0 2px 12px rgba(26,58,42,0.08);">
+          <div class="flex items-center gap-2 mb-2 ${i%2===0?'justify-end':''}">
+            <i data-lucide="${c.icon}" style="width:18px;height:18px;color:#52b788;"></i>
+            <span class="text-xs font-bold tracking-wider" style="color:#52b788;">${c.year}</span>
+          </div>
+          <h3 class="font-display text-lg" style="color:#1a3a2a;">${c.title}</h3>
+          <p class="text-sm mt-1" style="color:#2d6a4f;opacity:0.8;">${c.desc}</p>
+        </div>
+      </div>
+      <div class="absolute left-6 md:left-1/2 top-2 transform -translate-x-1/2">
+        <div class="timeline-dot" style="background:#52b788;border:3px solid #f0faf4;"></div>
+      </div>
+      <div class="md:hidden ml-12 card-hover p-5 rounded-xl flex-1" style="background:white;box-shadow:0 2px 12px rgba(26,58,42,0.08);">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="${c.icon}" style="width:18px;height:18px;color:#52b788;"></i>
+          <span class="text-xs font-bold tracking-wider" style="color:#52b788;">${c.year}</span>
+        </div>
+        <h3 class="font-display text-lg" style="color:#1a3a2a;">${c.title}</h3>
+        <p class="text-sm mt-1" style="color:#2d6a4f;opacity:0.8;">${c.desc}</p>
+      </div>
+      <div class="hidden md:block w-1/2 ${i%2===0?'order-2':'pr-10 text-right'}"></div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function renderPlatforms() {
+  const el = document.getElementById('platformCards');
+  el.innerHTML = platforms.map((p, i) => `
+    <div class="card-hover rounded-2xl p-6 cursor-pointer reveal" style="background:rgba(82,183,136,0.1);animation-delay:${i*0.1}s;" onclick="togglePlatform(this)">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:#52b788;">
+          <i data-lucide="${p.icon}" style="width:20px;height:20px;color:#f0faf4;"></i>
+        </div>
+        <h3 class="font-display text-xl" style="color:#b7e4c7;">${p.title}</h3>
+        <i data-lucide="chevron-down" class="ml-auto transition-transform duration-300" style="width:20px;height:20px;color:#52b788;"></i>
+      </div>
+      <div class="mb-3">
+        <div class="w-full h-2 rounded-full" style="background:rgba(183,228,199,0.2);">
+          <div class="progress-fill h-2 rounded-full" style="background:#52b788;width:0%;" data-width="${p.progress}%"></div>
+        </div>
+        <p class="text-xs mt-1" style="color:#52b788;">${p.progress}% Progress</p>
+      </div>
+      <div class="platform-expand">
+        <div class="space-y-3 pt-2" style="color:#b7e4c7;">
+          <div class="p-3 rounded-lg" style="background:rgba(26,58,42,0.5);">
+            <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color:#52b788;">Problem</p>
+            <p class="text-sm">${p.problem}</p>
+          </div>
+          <div class="p-3 rounded-lg" style="background:rgba(26,58,42,0.5);">
+            <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color:#52b788;">Action Plan</p>
+            <p class="text-sm">${p.action}</p>
+          </div>
+          <div class="p-3 rounded-lg" style="background:rgba(26,58,42,0.5);">
+            <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color:#52b788;">Expected Result</p>
+            <p class="text-sm">${p.result}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ---- INTERACTIONS ----
+function togglePlatform(card) {
+  const expand = card.querySelector('.platform-expand');
+  const chevron = card.querySelector('[data-lucide="chevron-down"]');
+  const isOpen = expand.classList.contains('open');
+  document.querySelectorAll('.platform-expand.open').forEach(e => {
+    e.classList.remove('open');
+    e.closest('[onclick]').querySelector('[data-lucide="chevron-down"]').style.transform = '';
+  });
+  if (!isOpen) {
+    expand.classList.add('open');
+    chevron.style.transform = 'rotate(180deg)';
+  }
+}
+
+// ---- SCROLL REVEALS ----
+function checkReveals() {
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.88) el.classList.add('active');
+  });
+  // Progress bars
+  document.querySelectorAll('.progress-fill[data-width]').forEach(bar => {
+    const rect = bar.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.9) bar.style.width = bar.dataset.width;
+  });
+}
+
+// ---- NAV HIGHLIGHT ----
+function updateNav() {
+  const sections = ['home','about','credentials','platforms'];
+  const scrollY = document.querySelector('body').scrollTop || document.documentElement.scrollTop;
+  let current = 'home';
+  sections.forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec && sec.offsetTop - 100 <= scrollY) current = id;
+  });
+  document.querySelectorAll('[data-nav]').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+
+// ---- BACK TO TOP ----
+function checkBackTop() {
+  const scrollY = document.querySelector('body').scrollTop || document.documentElement.scrollTop;
+  document.getElementById('backTop').classList.toggle('show', scrollY > 400);
+}
+
+// ---- INIT ----
+function initAll() {
+  renderTimeline();
+  renderPlatforms();
+  lucide.createIcons();
+
+  // Scroll listener
+  const scrollTarget = document.querySelector('body');
+  scrollTarget.addEventListener('scroll', () => { checkReveals(); updateNav(); checkBackTop(); });
+  window.addEventListener('scroll', () => { checkReveals(); updateNav(); checkBackTop(); });
+
+  // Hamburger
+  document.getElementById('hamBtn').addEventListener('click', function() {
+    this.classList.toggle('ham-open');
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+
+  // Mobile nav close on click
+  document.querySelectorAll('#mobileMenu a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('hamBtn').classList.remove('ham-open');
+      document.getElementById('mobileMenu').classList.remove('open');
+    });
+  });
+
+  // Back to top
+  document.getElementById('backTop').addEventListener('click', () => {
+    document.querySelector('body').scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Initial reveal check
+  setTimeout(checkReveals, 100);
+}
+
+// Loader
+setTimeout(() => {
+  document.getElementById('loader').classList.add('hidden');
+  initAll();
+}, 1200);
+
+// ---- ELEMENT SDK ----
+function applyConfig(config) {
+  const c = { ...defaultConfig, ...config };
+  const nameEl = document.getElementById('candidateName');
+  if (nameEl) nameEl.innerHTML = (c.candidate_name || defaultConfig.candidate_name).replace('\n', '<br>');
+  const posEl = document.getElementById('candidatePosition');
+  if (posEl) posEl.textContent = c.candidate_position;
+  const tagEl = document.getElementById('candidateTagline');
+  if (tagEl) tagEl.textContent = c.candidate_tagline;
+  const aboutH = document.getElementById('aboutHeading');
+  if (aboutH) aboutH.textContent = c.about_heading;
+  const aboutT = document.getElementById('aboutText');
+  if (aboutT) aboutT.textContent = c.about_text;
+  const credH = document.getElementById('credentialsTitle');
+  if (credH) credH.textContent = c.credentials_title;
+
+  // Colors
+  document.body.style.background = c.background_color;
+  document.querySelectorAll('#home, #credentials, #platforms').forEach(s => s.style.background = c.background_color);
+  document.querySelectorAll('#about, #navbar').forEach(s => s.style.background = c.surface_color || 'rgba(26,58,42,0.95)');
+  document.querySelector('footer').style.background = c.surface_color;
+
+  // Font
+  const ff = c.font_family || defaultConfig.font_family;
+  document.querySelectorAll('h1,h2,h3,.font-display').forEach(el => el.style.fontFamily = `${ff}, Georgia, serif`);
+
+  // Font size
+  const fs = c.font_size || defaultConfig.font_size;
+  document.querySelectorAll('#candidateName').forEach(el => el.style.fontSize = `${fs * 3}px`);
+  document.querySelectorAll('#aboutText, #candidateTagline').forEach(el => el.style.fontSize = `${fs}px`);
+}
+
+if (window.elementSdk) {
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => applyConfig(config),
+    mapToCapabilities: (config) => {
+      const c = { ...defaultConfig, ...config };
+      function mut(key) {
+        return {
+          get: () => c[key] || defaultConfig[key],
+          set: (v) => { c[key] = v; window.elementSdk.setConfig({ [key]: v }); }
+        };
+      }
+      return {
+        recolorables: [mut('background_color'), mut('surface_color'), mut('text_color'), mut('primary_action_color'), mut('secondary_action_color')],
+        borderables: [],
+        fontEditable: mut('font_family'),
+        fontSizeable: mut('font_size')
+      };
+    },
+    mapToEditPanelValues: (config) => {
+      const c = { ...defaultConfig, ...config };
+      return new Map([
+        ['candidate_name', c.candidate_name], ['candidate_position', c.candidate_position], ['candidate_tagline', c.candidate_tagline],
+        ['about_heading', c.about_heading], ['about_text', c.about_text],
+        ['credentials_title', c.credentials_title]
+      ]);
+    }
+  });
+}
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9eec4b914576fee8',t:'MTc3NjYwNTc1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
